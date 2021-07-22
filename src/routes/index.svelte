@@ -5,6 +5,15 @@
   let searchTerm = "";
   let filteredPokemon = [];
 
+  //  reactivity: triggers everytime search term gets updated
+  $: {
+    if(searchTerm) {
+      filteredPokemon = $pokemon.filter(pokeman => pokeman.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    } else {
+      filteredPokemon = [... $pokemon]
+    }
+  }
+
 </script>
 <svelte:head>
   <title>Pokedex Svelte</title>
@@ -17,7 +26,7 @@
 <div class="py-4 grid gap-4 md:grid-cols-2 grid-cols-1">
 
   
-  {#each $pokemon as pokeman}
+  {#each filteredPokemon as pokeman}
   <PokemanCard  pokeman={pokeman}/>
   {/each}
   
